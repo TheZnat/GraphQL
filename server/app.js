@@ -2,6 +2,7 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import schema from "./schema/schema.js";
 import mongoose from "mongoose";
+import cors from "cors";
 
 const app = express();
 const PORT = 3000;
@@ -13,7 +14,8 @@ mongoose
   .connect(URL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(`MongoDB connection error: ${err}`));
-
+  
+app.use(cors());
 app.use("/graphql", graphqlHTTP({ schema, graphiql: true }));
 
 app.listen(PORT, (err) => {
